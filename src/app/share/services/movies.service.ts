@@ -7,11 +7,11 @@ import { map, delay } from "rxjs/operators";
 
 import { environment } from "../../../environments/environment";
 
-const url = environment.url;
+const { url, poster_size } = environment;
 /* Base url form the configuration API */
 const base_url_image = 'http://image.tmdb.org/t/p/';
 /* Poster_size form the configuration API */
-const poster_size__small = 'w92'
+
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +29,7 @@ export class MoviesService {
 
         /* I must transform the poster_path property to adapt it with the API */
         map((results: Movie[]) => results.map(r => {
-          const changed = { ...r, poster_path: base_url_image + poster_size__small + r.poster_path }
+          const changed = { ...r, poster_path: base_url_image + poster_size + r.poster_path }
           return changed
         })),
 

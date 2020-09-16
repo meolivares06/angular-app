@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  url: 'http://localhost:3000/response'
+  url: 'http://localhost:3000/response',
+  poster_size: 'w92'
 };
 
 /*
