@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 
 import { Movie, Response } from 'src/app/share/model';
 import { Observable, of } from 'rxjs';
-import { map, delay } from "rxjs/operators";
+import { map, catchError } from "rxjs/operators";
 
 import { environment } from "../../../environments/environment";
 
 const { url, poster_size } = environment;
 /* Base url form the configuration API */
 const base_url_image = 'http://image.tmdb.org/t/p/';
-/* Poster_size form the configuration API */
+
 
 
 @Injectable({
@@ -23,7 +23,6 @@ export class MoviesService {
   getMovies(): Observable<Movie[]> {
     return this.http.get<Response>(url)
       .pipe(
-        delay(5000),
         /* I want Only a few items for saving time  */
         map((response: Response) => response.results.slice(0, 2)),
 
@@ -33,6 +32,7 @@ export class MoviesService {
           return changed
         })),
 
+        catchError(this.handleError<Movie[]>('getMovies', []))
       )
   }
 

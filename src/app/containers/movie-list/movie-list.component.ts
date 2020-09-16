@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Movie } from 'src/app/share/model';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { MoviesService } from 'src/app/share/services/movies.service';
-import { catchError, tap } from 'rxjs/operators';
-import { TruncatePipe } from "../../share/pipe/truncate.pipe";
+import { tap } from 'rxjs/operators';
 
 
 @Component({
@@ -25,8 +24,7 @@ export class MovieListComponent implements OnInit {
 
         tap(() => {
           this.loading$.next(false)
-        }),
-        catchError(this.movieService.handleError)
+        })
       );
   }
 
