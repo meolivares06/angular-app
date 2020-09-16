@@ -5,8 +5,9 @@ import { Movie, Response } from 'src/app/share/model';
 import { Observable, of } from 'rxjs';
 import { map, delay } from "rxjs/operators";
 
-const url = 'http://localhost:3000/response';
+import { environment } from "../../../environments/environment";
 
+const url = environment.url;
 /* Base url form the configuration API */
 const base_url_image = 'http://image.tmdb.org/t/p/';
 /* Poster_size form the configuration API */
