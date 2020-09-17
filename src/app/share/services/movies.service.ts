@@ -5,7 +5,7 @@ import { Movie, Response } from 'src/app/share/model';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from "rxjs/operators";
 
-import { environment } from "../../../environments/environment";
+import { environment } from "../../../environments/environment.prod";
 
 const { url, poster_size } = environment;
 /* Base url form the configuration API */
