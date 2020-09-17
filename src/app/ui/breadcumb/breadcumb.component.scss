@@ -11,3 +11,10 @@
   text-align: center;
   padding-bottom: 10px;
 }
+
+@media only screen and (max-width: 599px) {
+  /* For mobile phones: */
+  :host{
+    top: 112px
+  }
+}
