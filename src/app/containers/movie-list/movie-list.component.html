@@ -2,7 +2,7 @@
   <mat-spinner diameter="50"></mat-spinner>
 </div>
 <div *ngFor="let movie of movieList$ | async">
-  <app-movie title={{movie.title}} overview="{{movie.overview | truncate: 100}}" poster_path={{movie.poster_path}}>
+  <app-movie title={{movie.title}} overview="{{movie.overview | truncate: 130}}" poster_path={{movie.poster_path}}>
   </app-movie>
   <br>
 </div>
