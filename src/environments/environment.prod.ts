@@ -3,4 +3,5 @@ export const environment = {
   url: 'https://api.themoviedb.org/3/discover/movie?api_key=4b172fb5c6e8fcb226d23e4fc2e10efd&',
   poster_size: 'w300',
   apiKey: '4b172fb5c6e8fcb226d23e4fc2e10efd',
+  count: 25
 };

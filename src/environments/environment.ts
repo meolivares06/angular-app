@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   url: 'http://localhost:3000/response',
-  poster_size: 'w92'
+  poster_size: 'w92',
+  count: 2
 };
 
 /*

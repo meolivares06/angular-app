@@ -5,9 +5,9 @@ import { Movie, Response } from 'src/app/share/model';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from "rxjs/operators";
 
-import { environment } from "../../../environments/environment.prod";
+import { environment } from "../../../environments/environment";
 
-const { url, poster_size } = environment;
+const { url, poster_size, count } = environment;
 /* Base url form the configuration API */
 const base_url_image = 'http://image.tmdb.org/t/p/';
 
@@ -24,7 +24,7 @@ export class MoviesService {
     return this.http.get<Response>(url)
       .pipe(
         /* I want Only a few items for saving time  */
-        map((response: Response) => response.results.slice(0, 2)),
+        map((response: Response) => response.results.slice(0, count)),
 
         /* I must transform the poster_path property to adapt it with the API */
         map((results: Movie[]) => results.map(r => {
