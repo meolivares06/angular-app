@@ -13,7 +13,6 @@ export class AppComponent {
 
   }
   onSetOption(option: string): void {
-    console.log(option)
     this.option = option
 
     this.movieService.changeList(option)

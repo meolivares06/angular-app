@@ -24,7 +24,7 @@ export class MovieListComponent implements OnInit {
     this.loading$.next(true)
     this.listChanged$ = this.movieService.listChanged$;
     this.subscribeListChanged()
-    //this.getMoviesMostPopular()
+    this.getMoviesMostPopular()
   }
 
   subscribeListChanged() {
