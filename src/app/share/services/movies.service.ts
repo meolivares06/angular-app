@@ -26,7 +26,7 @@ export class MoviesService {
   }
 
   getMoviesMostPopular(): Observable<Movie[]> {
-    return this.http.get<Response>(url_base + most_popular + `?api_key=${apiKey}`)
+    return this.http.get<Response>(url_base + most_popular + `&api_key=${apiKey}`)
       .pipe(
         /* I want Only a few items for saving time  */
         map((response: Response) => response.results.slice(0, count)),
@@ -42,7 +42,7 @@ export class MoviesService {
   }
 
   getMoviesHighestRated(): Observable<Movie[]> {
-    return this.http.get<Response>(url_base + highest_rated + `?api_key=${apiKey}`)
+    return this.http.get<Response>(url_base + highest_rated + `&api_key=${apiKey}`)
       .pipe(
         /* I want Only a few items for saving time  */
         map((response: Response) => response.results.slice(0, count)),
@@ -58,7 +58,7 @@ export class MoviesService {
   }
 
   getMoviesMostPopularKids(): Observable<Movie[]> {
-    return this.http.get<Response>(url_base + most_popular_kids + `?api_key=${apiKey}`)
+    return this.http.get<Response>(url_base + most_popular_kids + `&api_key=${apiKey}`)
       .pipe(
         /* I want Only a few items for saving time  */
         map((response: Response) => response.results.slice(0, count)),
@@ -74,7 +74,7 @@ export class MoviesService {
   }
 
   getMoviesBestFrom2020(): Observable<Movie[]> {
-    return this.http.get<Response>(url_base + best_from_2020 + `?api_key=${apiKey}`)
+    return this.http.get<Response>(url_base + best_from_2020 + `&api_key=${apiKey}`)
       .pipe(
         /* I want Only a few items for saving time  */
         map((response: Response) => response.results.slice(0, count)),
