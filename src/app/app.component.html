@@ -1,1 +1,27 @@
+<mat-toolbar color="primary" class="mat-elevation-z6 my-toolbar">
+  <mat-toolbar-row>
+    <span>ngMovies</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row>
+    <span class="example-spacer">
+      <button mat-button>Most popular</button>
+      <button mat-button>Highest rated</button>
+      <button mat-button>Best from 2020</button>
+      <!-- <mat-button-toggle-group color="primary" name="fontStyle" aria-label="Font Style">
+        <mat-button-toggle color="primary" value="bold">Most popular</mat-button-toggle>
+        <mat-button-toggle value="italic">Highest rated</mat-button-toggle>
+        <mat-button-toggle value="underline">Best from 2020</mat-button-toggle>
+      </mat-button-toggle-group> -->
+
+    </span>
+
+  </mat-toolbar-row>
+</mat-toolbar>
+<div class="breadcumb">Your are in: Most popular</div>
+
 <app-movie-list></app-movie-list>
