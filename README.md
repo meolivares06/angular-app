@@ -148,16 +148,16 @@ URL: /discover/movie?primary_release_date.gte=2014-09-15&primary_release_date.lt
 ## What are the most popular movies?
 URL: /discover/movie?sort_by=popularity.desc
 
-What are the highest rated movies rated R?
+## What are the highest rated movies rated R?
 URL: /discover/movie/?certification_country=US&certification=R&sort_by=vote_average.desc
 
-What are the most popular kids movies?
+## What are the most popular kids movies?
 URL: /discover/movie?certification_country=US&certification.lte=G&sort_by=popularity.desc
 
-What is are the best movies from 2010?
+##What is are the best movies from 2010?
 URL: /discover/movie?primary_release_year=2010&sort_by=vote_average.desc
 
-What are the best dramas that were released this year?
+## What are the best dramas that were released this year?
 URL: /discover/movie?with_genres=18&primary_release_year=2014
 
 What are the highest rated science fiction movies that Tom Cruise has been in?

@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  option = 'Most popular'
 
+  onSetOption(option: string): void {
+    console.log(option)
+    this.option = option
+  }
 }
