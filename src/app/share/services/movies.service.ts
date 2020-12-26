@@ -26,7 +26,12 @@ export class MoviesService {
   }
 
   getMoviesMostPopular(): Observable<Movie[]> {
-    return this.http.get<Response>(url_base + most_popular + `&api_key=${apiKey}`)
+    let url2 = url_base + most_popular;
+    if (apiKey != '') {
+      alert(apiKey)
+      url2 += `&api_key=${apiKey}`
+    }
+    return this.http.get<Response>(url2)
       .pipe(
         /* I want Only a few items for saving time  */
         map((response: Response) => response.results.slice(0, count)),

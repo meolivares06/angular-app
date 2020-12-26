@@ -1,7 +1,7 @@
 <mat-card class="example-card">
   <mat-card-header>
 
-    <mat-card-title>{{ title }}</mat-card-title>
+    <mat-card-title><a routerLink="{{details_link}}">{{ title }}</a></mat-card-title>
     <mat-card-subtitle>{{ release_date }}</mat-card-subtitle>
   </mat-card-header>
   <img mat-card-image src="{{ poster_path }}" alt="Photo of a Shiba Inu">

@@ -16,7 +16,9 @@ export class MovieComponent {
   @Input() backdrop_path = ''
   @Input() release_date = ''
 
+  @Input('details-link') details_link = ''
 
+  @Output() movie_detail: EventEmitter<Movie> = new EventEmitter<Movie>()
   movie: Movie;
   constructor() {
     this.movie = new Movie()
@@ -24,6 +26,18 @@ export class MovieComponent {
 
   ngOnInit(): void {
 
+  }
+
+  onTitleClick(): void {
+    this.movieDetail()
+  }
+
+  movieDetail(): void {
+    this.movie.title = this.title;
+    this.movie.overview = this.overview;
+    this.movie.poster_path = this.poster_path;
+
+    this.movie_detail.emit(this.movie)
   }
 
   /*ngOnChanges(changes: SimpleChanges) {

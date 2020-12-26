@@ -6,16 +6,11 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter
   styleUrls: ['./button-option.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ButtonOptionComponent implements OnInit {
+export class ButtonOptionComponent {
+  @Input() link: string;
   @Input() option: string;
-  @Output() set_option: EventEmitter<string> = new EventEmitter<string>();
+
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
-  setOption(): void {
-    this.set_option.emit(this.option)
-  }
 
 }

@@ -9,10 +9,9 @@
 
   <mat-toolbar-row>
     <span class="example-spacer">
-      <app-button-option option="Most Popular" (set_option)="onSetOption($event)"></app-button-option>
-      <!-- <app-button-option option="Most Popular Kids" (set_option)="onSetOption($event)"></app-button-option> -->
-      <app-button-option option="Highest Rated" (set_option)="onSetOption($event)"></app-button-option>
-      <app-button-option option="Best From 2020" (set_option)="onSetOption($event)"></app-button-option>
+      <a mat-button class="button" [routerLink]="['/most-popular', { filter: 'most-popular' }]">Most Popular</a>
+      <a mat-button class="button" [routerLink]="['/highest-rated', { filter: 'highest-rated' }]">Highest Rated</a>
+      <a mat-button class="button" [routerLink]="['/best-from2020', { filter: 'best-from2020' }]">Best from 2020</a>
 
 
     </span>
@@ -21,4 +20,4 @@
 </mat-toolbar>
 
 <app-breadcumb [option]="option"></app-breadcumb>
-<app-movie-list></app-movie-list>
+<router-outlet></router-outlet>

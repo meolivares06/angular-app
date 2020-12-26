@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Movie } from 'src/app/share/model';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { MoviesService } from 'src/app/share/services/movies.service';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, switchMap } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -18,42 +19,59 @@ export class MovieListComponent implements OnInit {
 
   listChanged$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
-  constructor(private movieService: MoviesService) { }
+  showDetails$: Subject<any> = new Subject<any>();
+
+  filter: string;
+
+  constructor(private movieService: MoviesService, private route: ActivatedRoute,) {
+    this.filter = 'most-popular';
+
+  }
 
   ngOnInit() {
-    this.loading$.next(true)
-    this.listChanged$ = this.movieService.listChanged$;
-    this.subscribeListChanged()
-    this.getMoviesMostPopular()
-  }
+    /*this.route.data.subscribe(params => {
+      this.filter = params['filter'];
+    });*/
 
-  subscribeListChanged() {
-    this.listChanged$
-      .pipe(
-        map((value: string) => value.toLowerCase())
-      ).subscribe(value => {
-        console.log(value)
-        switch (value) {
-          case 'most popular':
-            this.getMoviesMostPopular()
-            break;
-          case 'most popular kids':
-            this.getMoviesMostPopularKids()
-            break;
-          case 'highest rated':
-            this.getMoviesHighestRated()
-            break;
-          case 'best from 2020':
-            this.getMoviesBestFrom2020()
-            break;
-          default:
-            break;
-        }
+    //this.loading$.next(true)
+
+
+    this.movieList$ = this.route.data.pipe(
+      switchMap(params => {
+        this.filter = params['filter'];
+        return this.makeRequest(this.filter)
       })
+    );
+
   }
 
-  getMoviesMostPopular() {
-    this.movieList$ = this.movieService.getMoviesMostPopular()
+  makeRequest(filter): Observable<Movie[]> {
+    let data = {}
+    data['most-popular'] = 'getMoviesMostPopular';
+    data['highest-rated'] = 'getMoviesHighestRated';
+    data['best-from2020'] = 'getMoviesBestFrom2020';
+
+    //return this.data[filter]();
+    switch (filter) {
+      case 'most-popular':
+        return this.getMoviesMostPopular()
+        break;
+      case 'most popular kids':
+        return this.getMoviesMostPopularKids()
+        break;
+      case 'highest-rated':
+        return this.getMoviesHighestRated()
+        break;
+      case 'best-from2020':
+        return this.getMoviesBestFrom2020()
+        break;
+      default:
+        break;
+    }
+  }
+
+  getMoviesMostPopular(): Observable<Movie[]> {
+    return this.movieService.getMoviesMostPopular()
       .pipe(
         tap(() => {
           this.loading$.next(false)
@@ -61,8 +79,8 @@ export class MovieListComponent implements OnInit {
       );
   }
 
-  getMoviesMostPopularKids() {
-    this.movieList$ = this.movieService.getMoviesMostPopularKids()
+  getMoviesMostPopularKids(): Observable<Movie[]> {
+    return this.movieService.getMoviesMostPopularKids()
       .pipe(
         tap(() => {
           this.loading$.next(false)
@@ -70,8 +88,8 @@ export class MovieListComponent implements OnInit {
       );
   }
 
-  getMoviesHighestRated() {
-    this.movieList$ = this.movieService.getMoviesHighestRated()
+  getMoviesHighestRated(): Observable<Movie[]> {
+    return this.movieService.getMoviesHighestRated()
       .pipe(
         tap(() => {
           this.loading$.next(false)
@@ -79,13 +97,18 @@ export class MovieListComponent implements OnInit {
       );
   }
 
-  getMoviesBestFrom2020() {
+  getMoviesBestFrom2020(): Observable<Movie[]> {
     this.movieList$ = this.movieService.getMoviesBestFrom2020()
       .pipe(
         tap(() => {
           this.loading$.next(false)
         })
       );
+  }
+
+  onMovieDetail(data) {
+    console.log(data)
+    this.showDetails$.next(data)
   }
 
 }

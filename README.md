@@ -177,3 +177,20 @@ URL: /discover/movie?with_genres=18&sort_by=vote_average.desc&vote_count.gte=10
 
 What are Liam Neeson's highest grossing rated 'R' movies?
 URL: /discover/movie?certification_country=US&certification=R&sort_by=revenue.desc&with_cast=3896
+
+
+
+
+TODOs:
+  Cargando general con interceptores, interfaz y servicio
+  Uso de switchMap en las peticiones
+  Customize theme material
+  Covertura de tests
+  Manejo de estado
+  Uso de patron Adapter
+  Agregar indicador al boton de la barra de herramientas
+  Mostrar detalles de una card
+  Lazy loading de las imagenes
+  Scroll infinito o Paginacion
+  FlexLayout
+  
