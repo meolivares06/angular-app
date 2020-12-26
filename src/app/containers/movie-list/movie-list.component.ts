@@ -25,11 +25,11 @@ export class MovieListComponent implements OnInit {
   @ViewChild(NgxMasonryComponent) masonry: NgxMasonryComponent;
 
   public myOptions: NgxMasonryOptions = {
-    gutter: 10,
-    itemSelector: 'app-movie',
-    //initLayout: true,
-    //columnWidth: '.grid-sizer',
-    //percentPosition: true
+    gutter: 5,
+    itemSelector: '.masonry-item',
+    initLayout: true,
+    //columnWidth: '20',
+    percentPosition: true
   };
 
   constructor(private movieService: MoviesService, private route: ActivatedRoute,) {
@@ -48,7 +48,7 @@ export class MovieListComponent implements OnInit {
     this.movieList$ = this.route.data.pipe(
       switchMap(params => {
         this.filter = params['filter'];
-        return this.makeRequest(this.filter)
+        return this.movieService.getMovies(this.filter)
       }),
       tap(value => this.masonry.layout())
     );

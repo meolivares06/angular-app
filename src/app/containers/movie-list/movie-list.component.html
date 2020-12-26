@@ -2,7 +2,7 @@
   <mat-spinner diameter="50"></mat-spinner>
 </div>
 
-<ngx-masonry style="width: 100vw;" [options]="myOptions">
+<ngx-masonry style="width: 90vw;" [options]="myOptions">
 
   <app-movie ngxMasonryItem class="masonry-item" *ngFor="let movie of movieList$ | async" title={{movie.title}} overview="{{movie.overview | truncate: 130}}"
     poster_path={{movie.poster_path}}>

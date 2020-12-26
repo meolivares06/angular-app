@@ -12,7 +12,7 @@ export const environment = {
   url: 'http://localhost:3000/response',
   poster_size: 'w92',
   apiKey: '',
-  count: 2
+  count: 11
 };
 
 /*

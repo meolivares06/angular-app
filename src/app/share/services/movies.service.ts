@@ -25,10 +25,31 @@ export class MoviesService {
     this.listChanged$.next(option)
   }
 
+  getMovies(filter): Observable<Movie[]> {
+    console.group("getMovies")
+    switch (filter) {
+      case 'most-popular':
+        return this.getMoviesMostPopular()
+        break;
+      case 'most popular kids':
+        return this.getMoviesMostPopularKids()
+        break;
+      case 'highest-rated':
+        return this.getMoviesHighestRated()
+        break;
+      case 'best-from2020':
+        return this.getMoviesBestFrom2020()
+        break;
+      default:
+        break;
+    }
+    console.groupEnd()
+  }
+
   getMoviesMostPopular(): Observable<Movie[]> {
+    console.group("getMoviesMostPopular")
     let url2 = url_base + most_popular;
     if (apiKey != '') {
-      alert(apiKey)
       url2 += `&api_key=${apiKey}`
     }
     return this.http.get<Response>(url2)
@@ -44,6 +65,8 @@ export class MoviesService {
 
         catchError(this.handleError<Movie[]>('getMovies', []))
       )
+
+    console.groupEnd()
   }
 
   getMoviesHighestRated(): Observable<Movie[]> {
