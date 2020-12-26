@@ -4,7 +4,7 @@ import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { MoviesService } from 'src/app/share/services/movies.service';
 import { tap, map, switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-
+import { NgxMasonryOptions } from 'ngx-masonry';
 
 @Component({
   selector: 'app-movie-list',
@@ -22,6 +22,12 @@ export class MovieListComponent implements OnInit {
   showDetails$: Subject<any> = new Subject<any>();
 
   filter: string;
+
+  public myOptions: NgxMasonryOptions = {
+    gutter: 10,
+    itemSelector: 'app-movie',
+    initLayout: true
+  };
 
   constructor(private movieService: MoviesService, private route: ActivatedRoute,) {
     this.filter = 'most-popular';
@@ -98,7 +104,7 @@ export class MovieListComponent implements OnInit {
   }
 
   getMoviesBestFrom2020(): Observable<Movie[]> {
-    this.movieList$ = this.movieService.getMoviesBestFrom2020()
+    return this.movieList$ = this.movieService.getMoviesBestFrom2020()
       .pipe(
         tap(() => {
           this.loading$.next(false)

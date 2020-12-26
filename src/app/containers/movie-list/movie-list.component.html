@@ -1,6 +1,17 @@
 <div class="loading" *ngIf="loading$ | async as loading">
   <mat-spinner diameter="50"></mat-spinner>
 </div>
+
+<ngx-masonry style="width: 90vw;" [options]="myOptions">
+
+  <app-movie ngxMasonryItem class="masonry-item" *ngFor="let movie of movieList$ | async" title={{movie.title}} overview="{{movie.overview | truncate: 130}}"
+    poster_path={{movie.poster_path}}>
+  </app-movie>
+
+
+</ngx-masonry>
+
+<!--
 <div *ngFor="let movie of movieList$ | async">
 
   <app-movie details-link='/movie-details' title={{movie.title}} overview="{{movie.overview | truncate: 130}}"
@@ -8,7 +19,7 @@
   </app-movie>
   <br>
 </div>
-
+-->
 <p *ngIf="error$ | async">
   Error
 </p>
