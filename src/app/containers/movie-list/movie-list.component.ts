@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Movie } from 'src/app/share/model';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { MoviesService } from 'src/app/share/services/movies.service';
 import { tap, map, switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-import { NgxMasonryOptions } from 'ngx-masonry';
+import { NgxMasonryOptions, NgxMasonryComponent } from 'ngx-masonry';
 
 @Component({
   selector: 'app-movie-list',
@@ -22,11 +22,14 @@ export class MovieListComponent implements OnInit {
   showDetails$: Subject<any> = new Subject<any>();
 
   filter: string;
+  @ViewChild(NgxMasonryComponent) masonry: NgxMasonryComponent;
 
   public myOptions: NgxMasonryOptions = {
     gutter: 10,
     itemSelector: 'app-movie',
-    initLayout: true
+    //initLayout: true,
+    //columnWidth: '.grid-sizer',
+    //percentPosition: true
   };
 
   constructor(private movieService: MoviesService, private route: ActivatedRoute,) {
@@ -46,7 +49,8 @@ export class MovieListComponent implements OnInit {
       switchMap(params => {
         this.filter = params['filter'];
         return this.makeRequest(this.filter)
-      })
+      }),
+      tap(value => this.masonry.layout())
     );
 
   }
