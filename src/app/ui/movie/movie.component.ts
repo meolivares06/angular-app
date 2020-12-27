@@ -15,6 +15,8 @@ export class MovieComponent {
   @Input() poster_path = ''
   @Input() backdrop_path = ''
   @Input() release_date = ''
+  @Input() genre_ids = []
+  @Input() all_genres = []
 
   @Input('details-link') details_link = ''
 
@@ -22,10 +24,12 @@ export class MovieComponent {
   movie: Movie;
   constructor() {
     this.movie = new Movie()
+
   }
 
   ngOnInit(): void {
-
+    console.log(this.genre_ids)
+    console.log(this.all_genres)
   }
 
   onTitleClick(): void {

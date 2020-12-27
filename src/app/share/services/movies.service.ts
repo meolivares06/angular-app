@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Movie, Response } from 'src/app/share/model';
+import { Movie, Response, Genre, ResponseGenre } from 'src/app/share/model';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-import { map, catchError } from "rxjs/operators";
+import { map, catchError, tap } from "rxjs/operators";
 
 import { environment } from "../../../environments/environment";
 
 
-const { url, url_base, apiKey, most_popular, most_popular_kids, highest_rated, best_from_2020, poster_size, count } = environment;
+const { url, url_base, apiKey, most_popular, most_popular_kids, highest_rated, best_from_2020, poster_size, count, url_genre } = environment;
 /* Base url form the configuration API */
 const base_url_image = 'http://image.tmdb.org/t/p/';
 
@@ -23,6 +23,14 @@ export class MoviesService {
 
   changeList(option: string): void {
     this.listChanged$.next(option)
+  }
+
+  getGenre(): Observable<Genre[]> {
+    return this.http.get<ResponseGenre>(url_genre).pipe(
+      tap(r => console.log(r)),
+      map((r: ResponseGenre) => r.genres),
+      catchError(this.handleError<Genre[]>('getMovies', []))
+    )
   }
 
   getMovies(filter): Observable<Movie[]> {

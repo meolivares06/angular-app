@@ -9,6 +9,7 @@ export class Movie {
   poster_path: string;
   backdrop_path: string;
   release_date: string;
+  genre_ids: []
 }
 
 export interface Response {

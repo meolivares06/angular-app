@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Movie } from 'src/app/share/model';
+import { Movie, Genre } from 'src/app/share/model';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { MoviesService } from 'src/app/share/services/movies.service';
 import { tap, map, switchMap } from 'rxjs/operators';
@@ -22,6 +22,8 @@ export class MovieListComponent implements OnInit {
   showDetails$: Subject<any> = new Subject<any>();
 
   filter: string;
+  genres: Genre[];
+
   @ViewChild(NgxMasonryComponent) masonry: NgxMasonryComponent;
 
   public myOptions: NgxMasonryOptions = {
@@ -34,6 +36,10 @@ export class MovieListComponent implements OnInit {
 
   constructor(private movieService: MoviesService, private route: ActivatedRoute,) {
     this.filter = 'most-popular';
+    this.movieService.getGenre().subscribe((r: Genre[]) => {
+      this.genres = [...r]
+      console.log(this.genres)
+    });
 
   }
 
