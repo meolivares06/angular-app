@@ -2,11 +2,30 @@
   <mat-spinner diameter="50"></mat-spinner>
 </div>
 
-<ngx-masonry style="width: 1200px;" [options]="myOptions">
+<ngx-masonry style="width: 1000px;" [options]="myOptions">
 
-  <app-movie ngxMasonryItem class="masonry-item" *ngFor="let movie of movieList$ | async" title={{movie.title}} overview="{{movie.overview | truncate: 130}}"
+  <mat-card *ngFor="let movie of movieList$ | async" class="example-card masonry-item" ngxMasonryItem>
+    <mat-card-header>
+
+      <mat-card-title>{{ movie.title }}</mat-card-title>
+      <mat-card-subtitle>{{ movie.genre_ids | genre:genres }}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="{{ movie.poster_path }}" alt="Photo of a Shiba Inu">
+    <mat-card-content>
+      <p class="" data-longstring="overview">
+        {{ movie.overview }}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>LIKE </button>
+      <button mat-button>SHARE</button>
+    </mat-card-actions>
+  </mat-card>
+
+
+  <!-- <app-movie *ngFor="let movie of movieList$ | async" title={{movie.title}} overview="{{movie.overview | truncate: 130}}"
     poster_path={{movie.poster_path}} genre_ids={{movie.genre_ids}} all_genres={{genres}}>
-  </app-movie>
+  </app-movie> -->
 
 
 </ngx-masonry>

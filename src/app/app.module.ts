@@ -11,6 +11,7 @@ import { MovieListComponent } from "./containers/movie-list/movie-list.component
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material/material.module';
 import { TruncatePipe } from './share/pipe/truncate.pipe';
+import { GenrePipe } from './share/pipes/genre.pipe';
 
 
 
@@ -18,7 +19,8 @@ import { TruncatePipe } from './share/pipe/truncate.pipe';
   declarations: [
     AppComponent,
     MovieListComponent,
-    TruncatePipe
+    TruncatePipe,
+    GenrePipe
   ],
   imports: [
     BrowserModule,

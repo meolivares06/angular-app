@@ -8,7 +8,7 @@ import { map, catchError, tap } from "rxjs/operators";
 import { environment } from "../../../environments/environment";
 
 
-const { url, url_base, apiKey, most_popular, most_popular_kids, highest_rated, best_from_2020, poster_size, count, url_genre } = environment;
+const { url_base, apiKey, most_popular, most_popular_kids, highest_rated, best_from_2020, poster_size, count, url_genre } = environment;
 /* Base url form the configuration API */
 const base_url_image = 'http://image.tmdb.org/t/p/';
 
@@ -19,43 +19,39 @@ const base_url_image = 'http://image.tmdb.org/t/p/';
 })
 export class MoviesService {
   listChanged$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  constructor(private http: HttpClient) { }
+  genres: Genre[];
+
+  constructor(private http: HttpClient) {
+  }
 
   changeList(option: string): void {
     this.listChanged$.next(option)
   }
 
-  getGenre(): Observable<Genre[]> {
+  getGenre$(): Observable<Genre[]> {
     return this.http.get<ResponseGenre>(url_genre).pipe(
-      tap(r => console.log(r)),
       map((r: ResponseGenre) => r.genres),
+      tap(values => this.genres = values),
       catchError(this.handleError<Genre[]>('getMovies', []))
     )
   }
 
   getMovies(filter): Observable<Movie[]> {
-    console.group("getMovies")
     switch (filter) {
       case 'most-popular':
         return this.getMoviesMostPopular()
-        break;
       case 'most popular kids':
         return this.getMoviesMostPopularKids()
-        break;
       case 'highest-rated':
         return this.getMoviesHighestRated()
-        break;
       case 'best-from2020':
         return this.getMoviesBestFrom2020()
-        break;
       default:
         break;
     }
-    console.groupEnd()
   }
 
   getMoviesMostPopular(): Observable<Movie[]> {
-    console.group("getMoviesMostPopular")
     let url2 = url_base + most_popular;
     if (apiKey != '') {
       url2 += `&api_key=${apiKey}`
@@ -67,14 +63,12 @@ export class MoviesService {
 
         /* I must transform the poster_path property to adapt it with the API */
         map((results: Movie[]) => results.map(r => {
-          const changed = { ...r, poster_path: base_url_image + poster_size + r.poster_path }
-          return changed
+          return { ...r, poster_path: base_url_image + poster_size + r.poster_path }
         })),
 
         catchError(this.handleError<Movie[]>('getMovies', []))
       )
 
-    console.groupEnd()
   }
 
   getMoviesHighestRated(): Observable<Movie[]> {
@@ -85,8 +79,7 @@ export class MoviesService {
 
         /* I must transform the poster_path property to adapt it with the API */
         map((results: Movie[]) => results.map(r => {
-          const changed = { ...r, poster_path: base_url_image + poster_size + r.poster_path }
-          return changed
+          return { ...r, poster_path: base_url_image + poster_size + r.poster_path }
         })),
 
         catchError(this.handleError<Movie[]>('getMovies', []))
@@ -101,8 +94,7 @@ export class MoviesService {
 
         /* I must transform the poster_path property to adapt it with the API */
         map((results: Movie[]) => results.map(r => {
-          const changed = { ...r, poster_path: base_url_image + poster_size + r.poster_path }
-          return changed
+          return { ...r, poster_path: base_url_image + poster_size + r.poster_path }
         })),
 
         catchError(this.handleError<Movie[]>('getMovies', []))
@@ -117,8 +109,7 @@ export class MoviesService {
 
         /* I must transform the poster_path property to adapt it with the API */
         map((results: Movie[]) => results.map(r => {
-          const changed = { ...r, poster_path: base_url_image + poster_size + r.poster_path }
-          return changed
+          return { ...r, poster_path: base_url_image + poster_size + r.poster_path }
         })),
 
         catchError(this.handleError<Movie[]>('getMovies', []))
