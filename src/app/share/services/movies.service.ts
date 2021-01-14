@@ -32,11 +32,12 @@ export class MoviesService {
     return this.http.get<ResponseGenre>(url_genre).pipe(
       map((r: ResponseGenre) => r.genres),
       tap(values => this.genres = values),
-      catchError(this.handleError<Genre[]>('getMovies', []))
+      catchError(this.handleError<Genre[]>('getGenres', []))
     )
   }
 
   getMovies(filter): Observable<Movie[]> {
+    console.log('getMovies')
     switch (filter) {
       case 'most-popular':
         return this.getMoviesMostPopular()

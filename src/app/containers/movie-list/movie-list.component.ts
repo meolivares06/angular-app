@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Movie, Genre } from 'src/app/share/model';
 import {Observable, BehaviorSubject, Subject, concat } from 'rxjs';
 import { MoviesService } from 'src/app/share/services/movies.service';
-import {tap, switchMap } from 'rxjs/operators';
+import {tap, switchMap} from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { NgxMasonryOptions, NgxMasonryComponent } from 'ngx-masonry';
 
@@ -12,7 +12,7 @@ import { NgxMasonryOptions, NgxMasonryComponent } from 'ngx-masonry';
   styleUrls: ['./movie-list.component.scss']
 })
 export class MovieListComponent implements OnInit {
-  movieList$: Observable<Movie[]>;
+  movieList$: Observable<Movie[] | Genre[]>;
   error$: Observable<any>;
   //loading$: Subject<boolean> = new Subject<boolean>()
   loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
@@ -37,40 +37,40 @@ export class MovieListComponent implements OnInit {
 
   constructor(private movieService: MoviesService, private route: ActivatedRoute,) {
     this.filter = 'most-popular';
-
   }
 
   ngOnInit() {
 
     this.loading$.next(true)
 
-    const filter$ = this.route.data.pipe(
-      tap(value => this.filter = value['filter']),
-      switchMap(params => genres$)
-    );
-
     const genres$ = this.movieService.getGenre$().pipe(
-      tap(value => {
-        console.log('genres$', value)
-        this.genres = value;
-      }),
-      switchMap(params => this.movieList$)
-    );
+      tap(evt => {
+        this.genres = evt;
+      })
+    )
 
     this.movieList$ = this.movieService.getMovies(this.filter).pipe(
-      tap(value => console.log('list', value))
-    );
+      tap(evt => console.log('movieList', this.filter, evt))
+    )
 
-    const r$ = concat(filter$, genres$,  this.movieList$);
+    const concat$ = concat(genres$, this.movieList$).pipe(
+      tap(evt => {
+        this.loading$.next(false)
+      })
+    )
 
-    r$.subscribe(value => {
-      this.masonry.layout();
-      this.loading$.next(false);
-    })
+    this.movieList$ = this.route.data.pipe(
+      tap(params => {
+        this.filter = params['filter']
+      }),
+      switchMap(value => {
+        return concat$
+      }),
+    )
 
   }
 
-  makeRequest(filter): Observable<Movie[]> {
+  makeRequest(filter): Observable<Movie[] | Genre[]> {
     let data = {}
     data['most-popular'] = 'getMoviesMostPopular';
     data['highest-rated'] = 'getMoviesHighestRated';
@@ -118,7 +118,7 @@ export class MovieListComponent implements OnInit {
       );
   }
 
-  getMoviesBestFrom2020(): Observable<Movie[]> {
+  getMoviesBestFrom2020(): Observable<Movie[] | Genre[]> {
     return this.movieList$ = this.movieService.getMoviesBestFrom2020()
       .pipe(
         tap(() => {
